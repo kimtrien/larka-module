@@ -1,0 +1,20 @@
+{
+    "name": "kjmtrue/larka-module",
+    "description": "Laravel Module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kjmtrue",
+            "email": "kimtrien@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "KjmTrue\\Module\\": "src/"
+        }
+    }
+}
