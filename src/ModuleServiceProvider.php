@@ -13,11 +13,11 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/modules.php' => config_path('modules.php'),
+            __DIR__ . '/../config/module.php' => config_path('module.php'),
         ]);
 
         // Load list modules
-        $modules = config('module.modules');
+        $modules = config('module.modules', []);
 
         foreach ($modules as $module) {
             $module_dir = base_path("modules/{$module}");
