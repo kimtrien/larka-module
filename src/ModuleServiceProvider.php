@@ -1,5 +1,5 @@
 <?php
-namespace Kjmtrue\Module;
+namespace KjmTrue\Module;
 
 use Illuminate\Support\ServiceProvider;
 
