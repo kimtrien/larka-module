@@ -17,7 +17,11 @@ class ModuleServiceProvider extends ServiceProvider
         ]);
 
         // Load list modules
-        $modules = config('module.modules', []);
+        if ($env_modules = env('MODULES')) {
+            $modules = explode(',', $env_modules);
+        } else {
+            $modules = config('module.modules', []);
+        }
 
         foreach ($modules as $module) {
             $module_dir = base_path("modules/{$module}");
