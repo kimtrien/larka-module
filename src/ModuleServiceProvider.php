@@ -36,6 +36,13 @@ class ModuleServiceProvider extends ServiceProvider
             if(is_dir($module_dir . '/resources/lang')){
                 $this->loadTranslationsFrom($module_dir . '/resources/lang', $module);
             }
+
+            // publishes migrations
+            if(is_dir($module_dir . '/database/migrations')){
+                $this->publishes([
+                    $module_dir . '/database/migrations/' => database_path('migrations')
+                ], 'migrations');
+            }
         }
     }
 
