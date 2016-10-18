@@ -31,6 +31,11 @@ class ModuleServiceProvider extends ServiceProvider
                 require $module_dir . '/routes.php';
             }
 
+            // Load menus.php module
+            if(file_exists($module_dir . '/menus.php')){
+                require $module_dir . '/menus.php';
+            }
+
             // Load view modules
             if(is_dir($module_dir . '/resources/views')){
                 $this->loadViewsFrom($module_dir . '/resources/views', $module);
@@ -57,6 +62,17 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('menu-admin', function () {
+            return new MenuAdmin();
+        });
+
+        $this->app->singleton('menu-frontend', function () {
+            return new MenuFrontend();
+        });
+    }
+
+    public function provides()
+    {
+        return ['menu-admin', 'menu-frontend'];
     }
 }
