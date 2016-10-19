@@ -1,6 +1,7 @@
 <?php
 namespace KjmTrue\Module;
 
+use Event;
 use Illuminate\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -53,6 +54,10 @@ class ModuleServiceProvider extends ServiceProvider
                 ], 'migrations-modules');
             }
         }
+
+        Event::listen('Illuminate\Auth\Events\Login', function ($user) {
+            (new CheckLogin())->check();
+        });
     }
 
     /**
