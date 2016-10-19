@@ -25,6 +25,11 @@ class MigrateModuleCommand extends ConsoleCommand
      */
     public function handle()
     {
+        Artisan::call("vendor:publish", [
+            "--tag"   => "migrations-modules",
+            "--force" => true
+        ]);
+
         Artisan::call("migrate", [
             "--path" => "/database/migrations/modules"
         ]);
