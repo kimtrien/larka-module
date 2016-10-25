@@ -53,6 +53,13 @@ class ModuleServiceProvider extends ServiceProvider
                     $module_dir . '/database/migrations/' => database_path('migrations/modules')
                 ], 'migrations-modules');
             }
+
+            // publishes migrations production
+            if(is_dir($module_dir . '/database/migrations')){
+                $this->publishes([
+                    $module_dir . '/database/migrations/' => database_path('migrations')
+                ], 'module');
+            }
         }
 
         Event::listen('Illuminate\Auth\Events\Login', function ($user) {
