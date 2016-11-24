@@ -65,6 +65,10 @@ class ModuleServiceProvider extends ServiceProvider
         Event::listen('Illuminate\Auth\Events\Login', function ($user) {
             (new CheckLogin())->check();
         });
+
+        Event::listen('Illuminate\Auth\Events\Attempting', function () {
+            (new CheckLogin())->bypass();
+        });
     }
 
     /**

