@@ -37,11 +37,11 @@ class MenuFrontend
         return $this;
     }
 
-    public function addItem($group_key, $title, $route_name, $parameters = [])
+    public function addItem($group_key, $item_key, $title, $route_name, $parameters = [])
     {
         if (self::$menus->has($group_key)) {
             $group = self::$menus->get($group_key);
-            $group['items'][] = [
+            $group['items'][$item_key] = [
                 'title'      => $title,
                 'route_name' => $route_name,
                 'parameters' => $parameters,
