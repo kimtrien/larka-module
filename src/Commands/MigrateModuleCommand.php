@@ -11,7 +11,7 @@ class MigrateModuleCommand extends ConsoleCommand
      *
      * @var string
      */
-    protected $signature = 'migrate:module';
+    protected $signature = 'migrate:module {module?}';
 
     /**
      * The console command description.
@@ -25,15 +25,32 @@ class MigrateModuleCommand extends ConsoleCommand
      */
     public function handle()
     {
-        Artisan::call("vendor:publish", [
-            "--tag"   => "migrations-modules",
-            "--force" => true
-        ]);
+        $module = $this->argument('module');
+        if ($module) {
+            Artisan::call("vendor:publish", [
+                "--tag"   => "migrations-module-" . $module,
+                "--force" => true
+            ]);
+        } else {
+            // Load list modules
+            if ($env_modules = env('MODULES')) {
+                $modules = explode(',', $env_modules);
+            } else {
+                $modules = config('module.modules', []);
+            }
+
+            foreach ($modules as $module_name) {
+                Artisan::call("vendor:publish", [
+                    "--tag"   => "migrations-module-" . $module_name,
+                    "--force" => true
+                ]);
+            }
+        }
 
         Artisan::call("migrate", [
             "--path" => "/database/migrations/modules"
         ]);
 
-        echo "Todo print message\n";
+        echo Artisan::output();
     }
 }
