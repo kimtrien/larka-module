@@ -51,7 +51,7 @@ class ModuleServiceProvider extends ServiceProvider
             if(is_dir($module_dir . '/database/migrations')){
                 $this->publishes([
                     $module_dir . '/database/migrations/' => database_path('migrations/modules')
-                ], 'migrations-modules');
+                ], 'migrations-module-' . $module);
             }
 
             // publishes migrations production
